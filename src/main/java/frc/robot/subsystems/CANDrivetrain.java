@@ -5,7 +5,10 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.*;
+import static frc.robot.utils.CtreUtils.*;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,30 +20,36 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * for control. Subsystems are a mechanism that, when used in conjuction with command "Requirements", ensure
  * that hardware is only being used by 1 command at a time.
  */
-public class CANDrivetrain extends SubsystemBase {
+public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
   /*Class member variables. These variables represent things the class needs to keep track of and use between
   different method calls. */
   DifferentialDrive m_drivetrain;
+
+  TalonFX leftFront;
+  TalonFX leftRear;
+  TalonFX rightFront;
+  TalonFX rightRear;
 
   /*Constructor. This method is called when an instance of the class is created. This should generally be used to set up
    * member variables and perform any configuration or set up necessary on hardware.
    */
   public CANDrivetrain() {
-    TalonFX leftFront = new TalonFX(kLeftFrontID);
-    TalonFX leftRear = new TalonFX(kLeftRearID);
-    TalonFX rightFront = new TalonFX(kRightFrontID);
-    TalonFX rightRear = new TalonFX(kRightRearID);
+    leftFront = new TalonFX(kLeftFrontID);
+    leftRear = new TalonFX(kLeftRearID);
+    rightFront = new TalonFX(kRightFrontID);
+    rightRear = new TalonFX(kRightRearID);
 
     /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
      *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
-    leftFront.setSmartCurrentLimit(kCurrentLimit);
-    leftRear.setSmartCurrentLimit(kCurrentLimit);
-    rightFront.setSmartCurrentLimit(kCurrentLimit);
-    rightRear.setSmartCurrentLimit(kCurrentLimit);
+    TalonFXConfiguration motorConfig = generateDriveMotorConfig();
+    leftFront.getConfigurator().apply(motorConfig);
+    leftRear.getConfigurator().apply(motorConfig);
+    rightFront.getConfigurator().apply(motorConfig);
+    rightRear.getConfigurator().apply(motorConfig);
 
     // Set the rear motors to follow the front motors.
-    leftRear.follow(leftFront);
-    rightRear.follow(rightFront);
+    leftRear.setControl(new Follower(leftFront.getDeviceID(), false));
+    rightRear.setControl(new Follower(rightFront.getDeviceID(), false));
 
     // Invert the left side so both side drive forward with positive motor outputs
     leftFront.setInverted(true);
@@ -61,5 +70,11 @@ public class CANDrivetrain extends SubsystemBase {
   public void periodic() {
     /*This method will be called once per scheduler run. It can be used for running tasks we know we want to update each
      * loop such as processing sensor data. Our drivetrain is simple so we don't have anything to put here */
+  }
+
+  @Override
+  public void close() {
+    leftRear.close();
+    rightRear.close();
   }
 }
