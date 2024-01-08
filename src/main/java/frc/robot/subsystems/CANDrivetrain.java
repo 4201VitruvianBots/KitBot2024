@@ -9,6 +9,7 @@ import static frc.robot.utils.CtreUtils.*;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,10 +31,14 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
   TalonFX rightFront;
   TalonFX rightRear;
 
+  Pigeon2 pigeon = new Pigeon2(kPigeonID);
+
   /*Constructor. This method is called when an instance of the class is created. This should generally be used to set up
    * member variables and perform any configuration or set up necessary on hardware.
    */
   public CANDrivetrain() {
+    pigeon.setYaw(0);
+
     leftFront = new TalonFX(kLeftFrontID);
     leftRear = new TalonFX(kLeftRearID);
     rightFront = new TalonFX(kRightFrontID);
@@ -64,6 +69,11 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
    * and a rotation about the Z (turning the robot about it's center) and uses these to control the drivetrain motors */
   public void arcadeDrive(double speed, double rotation) {
     m_drivetrain.arcadeDrive(speed, rotation);
+  }
+
+  public void resetGyro() {
+    pigeon.setYaw(0);
+    // TODO: Figure out how to set accum z angle
   }
 
   @Override
