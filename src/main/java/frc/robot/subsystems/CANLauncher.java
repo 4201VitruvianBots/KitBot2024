@@ -5,7 +5,9 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.LauncherConstants.*;
+import static frc.robot.utils.CtreUtils.generateDriveMotorConfig;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,8 +21,10 @@ public class CANLauncher extends SubsystemBase {
     m_launchWheel = new TalonFX(kLauncherID);
     m_feedWheel = new TalonFX(kFeederID);
 
-    m_launchWheel.setSmartCurrentLimit(kLauncherCurrentLimit);
-    m_feedWheel.setSmartCurrentLimit(kFeedCurrentLimit);
+    TalonFXConfiguration motorConfig = generateDriveMotorConfig();
+    m_launchWheel.getConfigurator().apply(motorConfig);
+    m_feedWheel.getConfigurator().apply(motorConfig);
+    
   }
 
   /**
