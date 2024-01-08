@@ -6,19 +6,18 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.LauncherConstants.*;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CANLauncher extends SubsystemBase {
-  CANSparkMax m_launchWheel;
-  CANSparkMax m_feedWheel;
+  TalonFX m_launchWheel;
+  TalonFX m_feedWheel;
 
   /** Creates a new Launcher. */
   public CANLauncher() {
-    m_launchWheel = new CANSparkMax(kLauncherID, MotorType.kBrushed);
-    m_feedWheel = new CANSparkMax(kFeederID, MotorType.kBrushed);
+    m_launchWheel = new TalonFX(kLauncherID);
+    m_feedWheel = new TalonFX(kFeederID);
 
     m_launchWheel.setSmartCurrentLimit(kLauncherCurrentLimit);
     m_feedWheel.setSmartCurrentLimit(kFeedCurrentLimit);

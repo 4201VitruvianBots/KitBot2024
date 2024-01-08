@@ -6,8 +6,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.*;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -27,10 +26,10 @@ public class CANDrivetrain extends SubsystemBase {
    * member variables and perform any configuration or set up necessary on hardware.
    */
   public CANDrivetrain() {
-    CANSparkMax leftFront = new CANSparkMax(kLeftFrontID, MotorType.kBrushed);
-    CANSparkMax leftRear = new CANSparkMax(kLeftRearID, MotorType.kBrushed);
-    CANSparkMax rightFront = new CANSparkMax(kRightFrontID, MotorType.kBrushed);
-    CANSparkMax rightRear = new CANSparkMax(kRightRearID, MotorType.kBrushed);
+    TalonFX leftFront = new TalonFX(kLeftFrontID);
+    TalonFX leftRear = new TalonFX(kLeftRearID);
+    TalonFX rightFront = new TalonFX(kRightFrontID);
+    TalonFX rightRear = new TalonFX(kRightRearID);
 
     /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
      *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
