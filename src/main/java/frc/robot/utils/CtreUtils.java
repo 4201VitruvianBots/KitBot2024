@@ -54,7 +54,8 @@ public final class CtreUtils {
     motorConfig.CurrentLimits.SupplyTimeThreshold = 0.1;
     motorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-    motorConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.25; // TODO adjust this later
+    motorConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.25; // TO
+    // DO adjust this later
     motorConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.1; // TODO Adjust this later
 
     motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;

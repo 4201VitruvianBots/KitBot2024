@@ -5,9 +5,11 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.*;
+import static frc.robot.utils.CtreUtils.*;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,10 +32,19 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
   TalonFX rightFront;
   TalonFX rightRear;
 
+  TalonFX leftFront;
+  TalonFX leftRear;
+  TalonFX rightFront;
+  TalonFX rightRear;
+
+  Pigeon2 pigeon = new Pigeon2(kPigeonID);
+
   /*Constructor. This method is called when an instance of the class is created. This should generally be used to set up
    * member variables and perform any configuration or set up necessary on hardware.
    */
   public CANDrivetrain() {
+    pigeon.setYaw(0);
+
     leftFront = new TalonFX(kLeftFrontID);
     leftRear = new TalonFX(kLeftRearID);
     rightFront = new TalonFX(kRightFrontID);
@@ -46,7 +57,7 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
     leftRear.getConfigurator().apply(motorConfig);
     rightFront.getConfigurator().apply(motorConfig);
     rightRear.getConfigurator().apply(motorConfig);
-    
+
     // Set the rear motors to follow the front motors.
     leftRear.setControl(new Follower(leftFront.getDeviceID(), false));
     rightRear.setControl(new Follower(rightFront.getDeviceID(), false));
@@ -67,12 +78,17 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
     m_drivetrain.arcadeDrive(speed, rotation);
   }
 
+  public void resetGyro() {
+    pigeon.setYaw(0);
+    // TODO: Figure out how to set accum z angle
+  }
+
   @Override
   public void periodic() {
     /*This method will be called once per scheduler run. It can be used for running tasks we know we want to update each
      * loop such as processing sensor data. Our drivetrain is simple so we don't have anything to put here */
   }
-  
+
   @Override
   public void close() {
     leftRear.close();

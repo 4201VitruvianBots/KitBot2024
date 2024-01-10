@@ -24,7 +24,6 @@ public class CANLauncher extends SubsystemBase {
     TalonFXConfiguration motorConfig = generateDriveMotorConfig();
     m_launchWheel.getConfigurator().apply(motorConfig);
     m_feedWheel.getConfigurator().apply(motorConfig);
-    
   }
 
   /**
