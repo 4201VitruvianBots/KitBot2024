@@ -11,6 +11,9 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -32,6 +35,7 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
   TalonFX rightRear;
 
   Pigeon2 pigeon = new Pigeon2(kPigeonID);
+  DifferentialDriveOdometry odometry;
 
   /*Constructor. This method is called when an instance of the class is created. This should generally be used to set up
    * member variables and perform any configuration or set up necessary on hardware.
@@ -63,8 +67,18 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
     // Put the front motors into the differential drive object. This will control all 4 motors with
     // the rears set to follow the fronts
     m_drivetrain = new DifferentialDrive(leftFront, rightFront);
+    
+    odometry = new DifferentialDriveOdometry(pigeon.getRotation2d(), getDistanceMeters(true), getDistanceMeters(false));
   }
 
+  private double getDistanceMeters(boolean left) {
+    if (left) {
+        return leftFront.getRotorPosition().getValueAsDouble() * kGearRatio * Math.PI * kWheelDiameter;
+    } else {
+        return rightFront.getRotorPosition().getValueAsDouble() * kGearRatio * Math.PI * kWheelDiameter;
+    }
+  }
+  
   /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
    * and a rotation about the Z (turning the robot about it's center) and uses these to control the drivetrain motors */
   public void arcadeDrive(double speed, double rotation) {
@@ -74,12 +88,18 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
   public void resetGyro() {
     pigeon.setYaw(0);
     // TODO: Figure out how to set accum z angle
+    // TODO: Reset odometry
+  }
+  
+  public Pose2d getRobotPose() {
+    return odometry.getPoseMeters();
   }
 
   @Override
   public void periodic() {
     /*This method will be called once per scheduler run. It can be used for running tasks we know we want to update each
      * loop such as processing sensor data. Our drivetrain is simple so we don't have anything to put here */
+    odometry.update(pigeon.getRotation2d(), getDistanceMeters(true), getDistanceMeters(false));
   }
 
   @Override
