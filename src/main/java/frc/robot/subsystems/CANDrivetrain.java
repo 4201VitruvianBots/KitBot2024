@@ -13,7 +13,6 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.utils.CtreUtils.*;
 
 /* This class declares the subsystem for the robot drivetrain if controllers are connected via CAN. Make sure to go to
  * RobotContainer and uncomment the line declaring this subsystem and comment the line for PWMDrivetrain.
@@ -26,11 +25,6 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
   /*Class member variables. These variables represent things the class needs to keep track of and use between
   different method calls. */
   DifferentialDrive m_drivetrain;
-  
-  TalonFX leftFront;
-  TalonFX leftRear;
-  TalonFX rightFront;
-  TalonFX rightRear;
 
   TalonFX leftFront;
   TalonFX leftRear;
@@ -69,7 +63,6 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
     // Put the front motors into the differential drive object. This will control all 4 motors with
     // the rears set to follow the fronts
     m_drivetrain = new DifferentialDrive(leftFront, rightFront);
-    
   }
 
   /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
