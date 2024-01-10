@@ -6,10 +6,8 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.LauncherConstants.*;
 
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,34 +21,12 @@ public class CANLauncher extends SubsystemBase {
     m_launchWheel = new TalonSRX(kLauncherID);
     m_feedWheel = new TalonSRX(kFeederID);
     
-    TalonSRXConfiguration motorConfig = new TalonSRXConfiguration();
-    SupplyCurrentLimitConfiguration motorLimitConfig = new SupplyCurrentLimitConfiguration(true, 35, 60, 0.1);
+    m_launchWheel.configFactoryDefault();
+    m_feedWheel.configFactoryDefault();
     
-    motorConfig.slot0.kP = 0.24;
-    motorConfig.slot0.kI = 0.0;
-    motorConfig.slot0.kD = 0.0;
+    m_launchWheel.configPeakCurrentLimit(kLauncherCurrentLimit);
+    m_feedWheel.configPeakCurrentLimit(kFeedCurrentLimit);
     
-    // motorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
-    // //motorConfig.slot0.kV = 0.1185;
-
-    // motorConfig.Voltage.PeakForwardVoltage = 12;
-    // motorConfig.Voltage.PeakReverseVoltage = -12;
-
-    // motorConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.25; // TO
-    // // DO adjust this later
-    // motorConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.1; // TODO Adjust this later
-
-    // motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    // motorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-    
-    for (TalonSRX motor : new TalonSRX[] {m_launchWheel, m_feedWheel}) {
-      motor.configFactoryDefault();
-      
-      motor.configSupplyCurrentLimit(motorLimitConfig);
-      motor.configAllSettings(motorConfig);
-    }
-    
-    // TODO: Apply configurations
   }
 
   /**
