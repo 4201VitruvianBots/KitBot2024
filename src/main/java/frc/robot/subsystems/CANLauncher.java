@@ -8,7 +8,6 @@ import static frc.robot.Constants.LauncherConstants.*;
 
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -20,13 +19,12 @@ public class CANLauncher extends SubsystemBase {
   public CANLauncher() {
     m_launchWheel = new TalonSRX(kLauncherID);
     m_feedWheel = new TalonSRX(kFeederID);
-    
+
     m_launchWheel.configFactoryDefault();
     m_feedWheel.configFactoryDefault();
-    
+
     m_launchWheel.configPeakCurrentLimit(kLauncherCurrentLimit);
     m_feedWheel.configPeakCurrentLimit(kFeedCurrentLimit);
-    
   }
 
   /**

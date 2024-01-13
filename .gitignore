@@ -21,3 +21,6 @@ gradle-app.setting
 .classpath
 
 .gradle/
+
+*syncthing*
+bin/

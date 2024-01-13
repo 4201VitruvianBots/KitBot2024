@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,8 +32,10 @@ public class RobotContainer {
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
    * switch on the top.*/
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final Joystick m_leftDriverController =
+      new Joystick(OperatorConstants.kLeftDriverControllerPort);
+  private final Joystick m_rightDriverController =
+      new Joystick(OperatorConstants.kRightDriverControllerPort);
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
@@ -53,7 +56,7 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_drivetrain.arcadeDrive(
-                    -m_driverController.getLeftY(), -m_driverController.getRightX()),
+                    -m_leftDriverController.getRawAxis(1), -m_rightDriverController.getRawAxis(0)),
             m_drivetrain));
 
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch

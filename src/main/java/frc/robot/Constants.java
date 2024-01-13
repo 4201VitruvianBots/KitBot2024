@@ -18,8 +18,9 @@ public final class Constants {
   public static class OperatorConstants {
     // Port numbers for driver and operator gamepads. These correspond with the numbers on the USB
     // tab of the DriverStation
-    public static final int kDriverControllerPort = 0;
-    public static final int kOperatorControllerPort = 1;
+    public static final int kLeftDriverControllerPort = 0;
+    public static final int kRightDriverControllerPort = 1;
+    public static final int kOperatorControllerPort = 2;
   }
 
   public static class DrivetrainConstants {
@@ -33,7 +34,7 @@ public final class Constants {
 
     public static final double kGearRatio = 8.46;
     public static final double kWheelDiameter = Units.inchesToMeters(6);
-    
+
     // Current limit for drivetrain motors
     public static final int kCurrentLimit = 60;
   }
@@ -42,7 +43,7 @@ public final class Constants {
     // PWM ports/CAN IDs for motor controllers
     public static final int kFeederID = 5;
     public static final int kLauncherID = 6;
-
+    // Feeder left, launcher right
     // Current limit for launcher and feed wheels
     public static final int kLauncherCurrentLimit = 80;
     public static final int kFeedCurrentLimit = 80;
