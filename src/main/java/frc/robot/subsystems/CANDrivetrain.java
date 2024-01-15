@@ -7,10 +7,10 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.DrivetrainConstants.*;
 import static frc.robot.utils.CtreUtils.*;
 
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -23,15 +23,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * for control. Subsystems are a mechanism that, when used in conjuction with command "Requirements", ensure
  * that hardware is only being used by 1 command at a time.
  */
-public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
+public class CANDrivetrain extends SubsystemBase {
   /*Class member variables. These variables represent things the class needs to keep track of and use between
   different method calls. */
   DifferentialDrive m_drivetrain;
 
-  TalonFX leftFront;
-  TalonFX leftRear;
-  TalonFX rightFront;
-  TalonFX rightRear;
+  WPI_TalonSRX leftFront;
+  WPI_TalonSRX leftRear;
+  WPI_TalonSRX rightFront;
+  WPI_TalonSRX rightRear;
 
   Pigeon2 pigeon = new Pigeon2(kPigeonID);
   DifferentialDriveOdometry odometry;
@@ -42,23 +42,23 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
   public CANDrivetrain() {
     pigeon.setYaw(0);
 
-    leftFront = new TalonFX(kLeftFrontID);
-    leftRear = new TalonFX(kLeftRearID);
-    rightFront = new TalonFX(kRightFrontID);
-    rightRear = new TalonFX(kRightRearID);
+    leftFront = new WPI_TalonSRX(kLeftFrontID);
+    leftRear = new WPI_TalonSRX(kLeftRearID);
+    rightFront = new WPI_TalonSRX(kRightFrontID);
+    rightRear = new WPI_TalonSRX(kRightRearID);
 
     /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
      *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
-    TalonFXConfiguration motorConfig = generateDriveMotorConfig();
-    leftFront.getConfigurator().apply(motorConfig);
-    leftRear.getConfigurator().apply(motorConfig);
-    rightFront.getConfigurator().apply(motorConfig);
-    rightRear.getConfigurator().apply(motorConfig);
+    TalonSRXConfiguration motorConfig = generateSRXDriveMotorConfig();
+    leftFront.configAllSettings(motorConfig);
+    leftRear.configAllSettings(motorConfig);
+    rightFront.configAllSettings(motorConfig);
+    rightRear.configAllSettings(motorConfig);
 
     // Set the rear motors to follow the front motors.
-    leftRear.setControl(new Follower(leftFront.getDeviceID(), false));
-    rightRear.setControl(new Follower(rightFront.getDeviceID(), false));
-
+    leftRear.follow(leftFront);
+    rightRear.follow(rightFront);
+    
     // Invert the left side so both side drive forward with positive motor outputs
     leftFront.setInverted(true);
     rightFront.setInverted(false);
@@ -66,20 +66,22 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
     // Put the front motors into the differential drive object. This will control all 4 motors with
     // the rears set to follow the fronts
     m_drivetrain = new DifferentialDrive(leftFront, rightFront);
-
+    
     odometry =
         new DifferentialDriveOdometry(
             pigeon.getRotation2d(), getDistanceMeters(true), getDistanceMeters(false));
+    
   }
-
   private double getDistanceMeters(boolean left) {
     if (left) {
-      return leftFront.getRotorPosition().getValueAsDouble()
+      return leftFront.getSelectedSensorPosition()
+          / 4096.0
           * kGearRatio
           * Math.PI
           * kWheelDiameter;
     } else {
-      return rightFront.getRotorPosition().getValueAsDouble()
+      return rightFront.getSelectedSensorPosition()
+          / 4096.0
           * kGearRatio
           * Math.PI
           * kWheelDiameter;
@@ -109,9 +111,9 @@ public class CANDrivetrain extends SubsystemBase implements AutoCloseable {
     odometry.update(pigeon.getRotation2d(), getDistanceMeters(true), getDistanceMeters(false));
   }
 
-  @Override
-  public void close() {
-    leftRear.close();
-    rightRear.close();
-  }
+//   @Override
+//   public void close() {
+//     leftRear.close();
+//     rightRear.close();
+//   }
 }

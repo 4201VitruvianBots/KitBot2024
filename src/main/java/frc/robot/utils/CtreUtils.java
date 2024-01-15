@@ -1,5 +1,6 @@
 package frc.robot.utils;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -37,7 +38,7 @@ public final class CtreUtils {
     return motorConfig;
   }
 
-  public static TalonFXConfiguration generateDriveMotorConfig() {
+  public static TalonFXConfiguration generateFXDriveMotorConfig() {
     TalonFXConfiguration motorConfig = new TalonFXConfiguration();
 
     motorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
@@ -61,6 +62,38 @@ public final class CtreUtils {
     motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     motorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
+    return motorConfig;
+  }
+  
+  public static TalonSRXConfiguration generateSRXDriveMotorConfig() {
+    TalonSRXConfiguration motorConfig = new TalonSRXConfiguration();
+
+    // motorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
+    // motorConfig.Slot0.kV = 0.1185;
+    // motorConfig.Slot0.kP = 0.24;
+    // motorConfig.Slot0.kI = 0.0;
+    // motorConfig.Slot0.kD = 0.0;
+
+    // motorConfig.Voltage.PeakForwardVoltage = 12;
+    // motorConfig.Voltage.PeakReverseVoltage = -12;
+
+    // motorConfig.CurrentLimits.SupplyCurrentLimit = 35;
+    // motorConfig.CurrentLimits.SupplyCurrentThreshold = 60;
+    // motorConfig.CurrentLimits.SupplyTimeThreshold = 0.1;
+    // motorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+
+    // motorConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = 0.25; // TO
+    // // DO adjust this later
+    // motorConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.1; // TODO Adjust this later
+
+    // motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    // motorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
+    motorConfig.slot0.kP = 0.24;
+    motorConfig.slot0.kI = 0.0;
+    motorConfig.slot0.kD = 0.0;
+    
+    // motorConfig.peakCurrentLimit = 35;
     return motorConfig;
   }
 
