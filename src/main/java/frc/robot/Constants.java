@@ -57,4 +57,13 @@ public final class Constants {
 
     public static final double kLauncherDelay = 1;
   }
+  
+  public static class AmpConstants {
+    // PWM ports/CAN IDs for motor controllers
+    public static final int kAmpID = 8;
+    public static final int kAmpCurrentLimit = 80;
+    
+    public static final double kAmpIntakeSpeed = 0.2;
+    public static final double kAmpOuttakeSpeed = -0.8;
+  }
 }

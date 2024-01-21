@@ -11,12 +11,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class CANLauncher extends SubsystemBase {
+public class Launcher extends SubsystemBase {
   TalonSRX m_launchWheel;
   TalonSRX m_feedWheel;
 
   /** Creates a new Launcher. */
-  public CANLauncher() {
+  public Launcher() {
     m_launchWheel = new TalonSRX(kLauncherID);
     m_feedWheel = new TalonSRX(kFeederID);
 
