@@ -64,7 +64,7 @@ public final class CtreUtils {
 
     return motorConfig;
   }
-  
+
   public static TalonSRXConfiguration generateSRXDriveMotorConfig() {
     TalonSRXConfiguration motorConfig = new TalonSRXConfiguration();
 
@@ -92,7 +92,7 @@ public final class CtreUtils {
     motorConfig.slot0.kP = 0.24;
     motorConfig.slot0.kI = 0.0;
     motorConfig.slot0.kD = 0.0;
-    
+
     // motorConfig.peakCurrentLimit = 35;
     return motorConfig;
   }

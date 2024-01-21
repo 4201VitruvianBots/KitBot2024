@@ -7,10 +7,10 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.DrivetrainConstants.*;
 import static frc.robot.utils.CtreUtils.*;
 
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix6.hardware.Pigeon2;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -55,30 +55,32 @@ public class CANDrivetrain extends SubsystemBase {
     rightFront.configAllSettings(motorConfig);
     rightRear.configAllSettings(motorConfig);
 
+    leftFront.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 20, 30, 0.1));
+    leftRear.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 20, 30, 0.1));
+    rightFront.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 20,30, 0.1));
+    rightRear.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 20, 30, 0.1));
+
     // Set the rear motors to follow the front motors.
     leftRear.follow(leftFront);
     rightRear.follow(rightFront);
-    
+
     // Invert the left side so both side drive forward with positive motor outputs
     leftFront.setInverted(true);
+    leftRear.setInverted(true);
     rightFront.setInverted(false);
 
     // Put the front motors into the differential drive object. This will control all 4 motors with
     // the rears set to follow the fronts
     m_drivetrain = new DifferentialDrive(leftFront, rightFront);
-    
+
     odometry =
         new DifferentialDriveOdometry(
             pigeon.getRotation2d(), getDistanceMeters(true), getDistanceMeters(false));
-    
   }
+
   private double getDistanceMeters(boolean left) {
     if (left) {
-      return leftFront.getSelectedSensorPosition()
-          / 4096.0
-          * kGearRatio
-          * Math.PI
-          * kWheelDiameter;
+      return leftFront.getSelectedSensorPosition() / 4096.0 * kGearRatio * Math.PI * kWheelDiameter;
     } else {
       return rightFront.getSelectedSensorPosition()
           / 4096.0
@@ -111,9 +113,9 @@ public class CANDrivetrain extends SubsystemBase {
     odometry.update(pigeon.getRotation2d(), getDistanceMeters(true), getDistanceMeters(false));
   }
 
-//   @Override
-//   public void close() {
-//     leftRear.close();
-//     rightRear.close();
-//   }
+  //   @Override
+  //   public void close() {
+  //     leftRear.close();
+  //     rightRear.close();
+  //   }
 }
