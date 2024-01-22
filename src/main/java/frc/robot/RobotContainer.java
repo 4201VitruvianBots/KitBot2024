@@ -10,14 +10,12 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LauncherConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AmpIntake;
+import frc.robot.commands.AmpOuttake;
 import frc.robot.commands.Autos;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
-import frc.robot.subsystems.CANDrivetrain;
-import frc.robot.subsystems.CANLauncher;
-
-// import frc.robot.subsystems.CANDrivetrain;
-// import frc.robot.subsystems.CANLauncher;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,8 +25,9 @@ import frc.robot.subsystems.CANLauncher;
  */
 public class RobotContainer {
   // The robot's subsystems are defined here.
-  private final CANDrivetrain m_drivetrain = new CANDrivetrain();
-  private final CANLauncher m_launcher = new CANLauncher();
+  private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Launcher m_launcher = new Launcher();
+  private final Amp m_amp = new Amp();
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
    * switch on the top.*/
@@ -72,6 +71,12 @@ public class RobotContainer {
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
     m_operatorController.leftBumper().whileTrue(m_launcher.getIntakeCommand());
+    
+    // Intake note from source to score in amp
+    m_operatorController.leftTrigger().whileTrue(new AmpIntake(m_amp));
+    
+    // Score note in amp
+    m_operatorController.rightTrigger().whileTrue(new AmpOuttake(m_amp));
   }
 
   /**

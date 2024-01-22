@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * for control. Subsystems are a mechanism that, when used in conjuction with command "Requirements", ensure
  * that hardware is only being used by 1 command at a time.
  */
-public class CANDrivetrain extends SubsystemBase {
+public class Drivetrain extends SubsystemBase {
   /*Class member variables. These variables represent things the class needs to keep track of and use between
   different method calls. */
   DifferentialDrive m_drivetrain;
@@ -39,7 +39,7 @@ public class CANDrivetrain extends SubsystemBase {
   /*Constructor. This method is called when an instance of the class is created. This should generally be used to set up
    * member variables and perform any configuration or set up necessary on hardware.
    */
-  public CANDrivetrain() {
+  public Drivetrain() {
     pigeon.setYaw(0);
 
     leftFront = new WPI_TalonSRX(kLeftFrontID);
