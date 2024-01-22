@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -19,7 +20,8 @@ public class Amp extends SubsystemBase {
     m_ampMotor = new TalonSRX(kAmpID);
     
     m_ampMotor.configFactoryDefault();
-    m_ampMotor.configPeakCurrentLimit(kAmpCurrentLimit);
+    m_ampMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 20, 30, 0.1));
+    //m_ampMotor.configPeakCurrentLimit(kAmpCurrentLimit);
   }
 
   public void setSpeed(double output) {

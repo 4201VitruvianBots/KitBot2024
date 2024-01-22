@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.LauncherConstants.*;
 
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,8 +24,10 @@ public class Launcher extends SubsystemBase {
     m_launchWheel.configFactoryDefault();
     m_feedWheel.configFactoryDefault();
 
-    m_launchWheel.configPeakCurrentLimit(kLauncherCurrentLimit);
-    m_feedWheel.configPeakCurrentLimit(kFeedCurrentLimit);
+    m_launchWheel.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 20, 30, 0.1));
+    m_feedWheel.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 20, 30, 0.1));
+    // m_launchWheel.configPeakCurrentLimit(kLauncherCurrentLimit);
+    // m_feedWheel.configPeakCurrentLimit(kFeedCurrentLimit);
   }
 
   /**
