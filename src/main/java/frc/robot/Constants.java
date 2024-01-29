@@ -64,6 +64,6 @@ public final class Constants {
     public static final int kAmpCurrentLimit = 80;
     
     public static final double kAmpIntakeSpeed = 0.7;
-    public static final double kAmpOuttakeSpeed = -0.8;
+    public static final double kAmpOuttakeSpeed = -1.0;
   }
 }
