@@ -63,12 +63,12 @@ public class RobotContainer {
     m_operatorController
         .a()
         .whileTrue(
-            new PrepareLaunch(m_launcher));
-                // .withTimeout(LauncherConstants.kLauncherDelay)
-                // .andThen(new LaunchNote(m_launcher))
-                // .handleInterrupt(() -> m_launcher.stop());
+            new PrepareLaunch(m_launcher)
+                .withTimeout(LauncherConstants.kLauncherDelay)
+                .andThen(new LaunchNote(m_launcher))
+                .handleInterrupt(() -> m_launcher.stop()));
                 
-    m_operatorController.x().whileTrue(new LaunchNote(m_launcher));
+    //m_operatorController.x().whileTrue(new LaunchNote(m_launcher));
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
     m_operatorController.leftBumper().whileTrue(m_launcher.getIntakeCommand());
