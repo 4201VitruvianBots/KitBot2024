@@ -66,4 +66,12 @@ public final class Constants {
     public static final double kAmpIntakeSpeed = 0.7;
     public static final double kAmpOuttakeSpeed = -1.0;
   }
+  
+  public static class ClimberConstants {
+    // PWM ports/CAN IDs for motor controllers
+    public static final int kClimberID = 9;
+    public static final int kClimberCurrentLimit = 80;
+    
+    public static final double kClimberSpeed = 0.5;
+  }
 }

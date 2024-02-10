@@ -15,6 +15,7 @@ import frc.robot.commands.AmpOuttake;
 import frc.robot.commands.Autos;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
+import frc.robot.commands.RunClimberJoystick;
 import frc.robot.subsystems.*;
 
 /**
@@ -28,6 +29,7 @@ public class RobotContainer {
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final Launcher m_launcher = new Launcher();
   private final Amp m_amp = new Amp();
+  private final Climber m_climber = new Climber();
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
    * switch on the top.*/
@@ -57,7 +59,11 @@ public class RobotContainer {
                 m_drivetrain.arcadeDrive(
                     -m_leftDriverController.getRawAxis(1), -m_rightDriverController.getRawAxis(0)),
             m_drivetrain));
-
+    
+    m_climber.setDefaultCommand(
+        new RunClimberJoystick(m_climber, m_operatorController::getLeftY)
+    );
+    
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch
      * command for 1 seconds and then run the LaunchNote command */
     m_operatorController
