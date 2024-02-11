@@ -74,4 +74,25 @@ public final class Constants {
     
     public static final double kClimberSpeed = 0.5;
   }
+  
+  public static class SimConstants {
+    public static final double kDrivebaseWidth = Units.inchesToMeters(32);
+    
+    public static final double kClimberEdgeDistance = Units.inchesToMeters(10);
+    public static final double kLauncherEdgeDistance = Units.inchesToMeters(12);
+    
+    public static final double kClimberUnextendedLength = Units.inchesToMeters(5);
+    
+    public static final double kLauncherBaseLength = Units.inchesToMeters(16.5);
+    public static final double kLauncherWheelDiameter = Units.inchesToMeters(4);
+    public static final double kLauncherWheelGapLength = Units.inchesToMeters(1);
+    public static final double kLauncherEndLength = Units.inchesToMeters(6);
+    
+    public static final double kAmpBaseLength = Units.inchesToMeters(26);
+    public static final double kAmpWheelDiameter = Units.inchesToMeters(2);
+    
+    public static final double kAmpEdgeDistance = Units.inchesToMeters(29.5);
+    
+    public static final double kLauncherAngle = 55.842;
+  }
 }

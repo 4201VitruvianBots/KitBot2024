@@ -9,6 +9,8 @@ import static frc.robot.Constants.LauncherConstants.*;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -67,5 +69,24 @@ public class Launcher extends SubsystemBase {
   public void stop() {
     m_launchWheel.set(TalonSRXControlMode.PercentOutput, 0);
     m_feedWheel.set(TalonSRXControlMode.PercentOutput, 0);
+  }
+
+  public double getLaunchWheelPercentOutput() {
+      return m_launchWheel.getMotorOutputPercent();
+  }
+
+  public double getFeedWheelPercentOutput() {
+      return m_feedWheel.getMotorOutputPercent();
+  }
+  
+  public void updateSmartDashboard() {
+    SmartDashboard.putNumber("Launcher Speed", m_launchWheel.getMotorOutputPercent());
+    SmartDashboard.putNumber("Feeder Speed", m_feedWheel.getMotorOutputPercent());
+  }
+  
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    updateSmartDashboard();
   }
 }

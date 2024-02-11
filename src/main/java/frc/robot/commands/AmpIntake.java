@@ -22,19 +22,19 @@ public class AmpIntake extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_amp.setSpeed(kAmpIntakeSpeed);
+    m_amp.setPercentOutput(kAmpIntakeSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_amp.setSpeed(kAmpIntakeSpeed);
+    m_amp.setPercentOutput(kAmpIntakeSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_amp.setSpeed(0);
+    m_amp.setPercentOutput(0);
   }
 
   // Returns true when the command should end.

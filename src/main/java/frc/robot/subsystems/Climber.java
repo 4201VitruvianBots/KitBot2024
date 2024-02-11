@@ -25,6 +25,10 @@ public class Climber extends SubsystemBase {
     m_climberMotor.set(output);
   }
   
+  public double getPercentOutput() {
+    return m_climberMotor.get();
+  }
+  
   public void updateSmartDashboard() {
     SmartDashboard.putNumber("Climber Speed", m_climberMotor.get());
   }

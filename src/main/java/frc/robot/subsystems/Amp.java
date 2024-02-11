@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.AmpConstants.*;
@@ -24,12 +25,21 @@ public class Amp extends SubsystemBase {
     //m_ampMotor.configPeakCurrentLimit(kAmpCurrentLimit);
   }
 
-  public void setSpeed(double output) {
+  public void setPercentOutput(double output) {
     m_ampMotor.set(TalonSRXControlMode.PercentOutput, output);
+  }
+  
+  public double getPercentOutput() {
+    return m_ampMotor.getMotorOutputPercent();
+  }
+  
+  public void updateSmartDashboard() {
+    SmartDashboard.putNumber("Amp Speed", m_ampMotor.getMotorOutputPercent());
   }
   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    updateSmartDashboard();
   }
 }

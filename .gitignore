@@ -24,3 +24,15 @@ gradle-app.setting
 
 *syncthing*
 bin/
+
+ctre_sim/Pigeon 2 - 07 - 0 - ext.dat
+
+ctre_sim/Talon FX vers. C - 09 - 0 - ext.dat
+
+networktables.json
+
+simgui-ds.json
+
+simgui-window.json
+
+simgui.json

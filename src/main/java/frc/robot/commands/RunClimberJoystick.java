@@ -8,6 +8,7 @@ import static frc.robot.Constants.ClimberConstants.kClimberSpeed;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
 
@@ -31,7 +32,7 @@ public class RunClimberJoystick extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climber.setPercentOutput(kClimberSpeed * m_joystickY.getAsDouble());
+    m_climber.setPercentOutput(-(kClimberSpeed * MathUtil.applyDeadband(m_joystickY.getAsDouble(), 0.05)));
   }
 
   // Called once the command ends or is interrupted.

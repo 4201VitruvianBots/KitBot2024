@@ -17,6 +17,7 @@ import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
 import frc.robot.commands.RunClimberJoystick;
 import frc.robot.subsystems.*;
+import frc.robot.visualizers.SuperStructureVisualizer;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -39,6 +40,8 @@ public class RobotContainer {
       new Joystick(OperatorConstants.kRightDriverControllerPort);
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+  
+  private SuperStructureVisualizer m_visualizer = new SuperStructureVisualizer(m_amp, m_climber, m_launcher);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -94,5 +97,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_drivetrain);
+  }
+  
+  public void periodic() {
+    m_visualizer.periodic();
   }
 }
