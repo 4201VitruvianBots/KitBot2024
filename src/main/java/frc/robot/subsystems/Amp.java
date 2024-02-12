@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.AmpConstants.*;
@@ -15,7 +16,8 @@ import static frc.robot.Constants.AmpConstants.*;
 public class Amp extends SubsystemBase {
   /** Creates a new Amp. */
   TalonSRX m_ampMotor;
-  
+  DigitalInput distanceSensorDigitalInput = new DigitalInput(1);
+  DigitalInput distanceSensorDigitalInput2 = new DigitalInput(2);
   public Amp() {
     m_ampMotor = new TalonSRX(kAmpID);
     
@@ -27,9 +29,23 @@ public class Amp extends SubsystemBase {
   public void setSpeed(double output) {
     m_ampMotor.set(TalonSRXControlMode.PercentOutput, output);
   }
-  
+  public boolean getSensorInput1() {
+    return distanceSensorDigitalInput.get();
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if (distanceSensorDigitalInput.get()) {
+      System.out.println("Sensor 1 Working");
+    }
+    else {
+      System.out.println("Sensor 1 Not Working");
+    }
+    if (distanceSensorDigitalInput2.get()) {
+      System.out.println("Sensor 2 Working");
+    }
+    else {
+      System.out.println("Sensor 2 Not Working");
+    }
   }
 }

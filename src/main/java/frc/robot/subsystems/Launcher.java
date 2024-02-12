@@ -6,21 +6,16 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.LauncherConstants.*;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class Launcher extends SubsystemBase {
   TalonSRX m_launchWheel;
   TalonSRX m_feedWheel;
-  DigitalInput distanceSensorDigitalInput = new DigitalInput(1);
-  DigitalInput distanceSensorDigitalInput2 = new DigitalInput(2);
 
   /** Creates a new Launcher. */
   public Launcher() {
@@ -74,21 +69,6 @@ public class Launcher extends SubsystemBase {
     m_launchWheel.set(TalonSRXControlMode.PercentOutput, 0);
     m_feedWheel.set(TalonSRXControlMode.PercentOutput, 0);
   }
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    if (distanceSensorDigitalInput.get()) {
-      System.out.println("Sensor 1 Working");
-    }
-    else {
-      System.out.println("Sensor 1 Not Working");
-    }
-    if (distanceSensorDigitalInput2.get()) {
-      System.out.println("Sensor 2 Working");
-    }
-    else {
-      System.out.println("Sensor 2 Not Working");
-    }
-  }
+
 
 }

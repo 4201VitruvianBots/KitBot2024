@@ -8,6 +8,7 @@ import static frc.robot.Constants.AmpConstants.kAmpIntakeSpeed;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Amp;
+import frc.robot.subsystems.Launcher;
 
 public class AmpIntake extends Command {
   /** Creates a new AmpIntake. */
@@ -40,6 +41,9 @@ public class AmpIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (m_amp.getSensorInput1()) {
+      return true;
+    }
     return false;
   }
 }
